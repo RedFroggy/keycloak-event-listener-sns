@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.redfroggy.keycloak</groupId>
+  <artifactId>keycloak-event-listener-sns</artifactId>
+  <version>1.0-SNAPSHOT</version> <!-- de quelle version est-il question ici ?-->
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>SPI that publishes events to an aws sns topic</description>
+  <url>https://github.com/RedFroggy/keycloak-event-listener-sns</url>
+
+  
+
+  <!--A quoi correspond cette section ?-->
+  <licenses></licenses>
+
+  <developers>
+      <developer>
+          <name>Jay David</name>
+          <email>david.jay@redfroggy.fr</email>
+          <organization>RED FROGGY</organization>
+          <organizationUrl>https://www.redfroggy.fr/</organizationUrl>
+      </developer>
+      <developer>
+          <name>Labbé Claire</name>
+          <email>claire.labbe@redfroggy.fr</email>
+          <organization>RED FROGGY</organization>
+          <organizationUrl>https://www.redfroggy.fr/</organizationUrl>
+      </developer>
+  </developers>
+
+  <scm>
+      <connection>scm:git:git://github.com/RedFroggy/keycloak-event-listener-sns.git</connection>
+      <developerConnection>scm:git:ssh://git@github.com:RedFroggy/keycloak-event-listener-sns.git
+      </developerConnection>
+      <url>https://github.com/RedFroggy/keycloak-event-listener-sns.git</url>
+  </scm>
+
+  <issueManagement>
+      <system>Github</system>
+      <url>https://github.com/RedFroggy/keycloak-event-listener-sns/issues</url>
+  </issueManagement>   
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>   
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>
