@@ -6,16 +6,18 @@
 
   <groupId>fr.redfroggy.keycloak</groupId>
   <artifactId>keycloak-event-listener-sns</artifactId>
-  <version>1.0-SNAPSHOT</version> <!-- de quelle version est-il question ici ?-->
+  <version>1.0-SNAPSHOT</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>SPI that publishes events to an aws sns topic</description>
   <url>https://github.com/RedFroggy/keycloak-event-listener-sns</url>
 
-  
-
-  <!--A quoi correspond cette section ?-->
-  <licenses></licenses>
+  <licenses>
+      <license>
+          <name>The MIT License (MIT)</name>
+          <url>https://opensource.org/licenses/MIT</url>
+      </license>
+  </licenses>
 
   <developers>
       <developer>
@@ -97,6 +99,21 @@
   </build>
 
   <dependencies>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-server-spi-private</artifactId>
+      <version>20.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-server-spi</artifactId>
+      <version>20.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-core</artifactId>
+      <version>20.0.2</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

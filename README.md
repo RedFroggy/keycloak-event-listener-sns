@@ -2,7 +2,7 @@
 A [Keycloak](https://www.keycloak.org/) SPI that publishes events to an aws sns topic.
 
 ## **Compatibility**
-The version (19.0.x) of this plugin is compatible with Keycloak `20.0.x` and higher.
+The version 1.0 of this plugin is compatible with Keycloak `20.0.x` and higher.
 
 ## **How to install ?**
 In a terminal, install docker-compose with the below command
