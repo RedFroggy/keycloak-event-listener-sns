@@ -50,6 +50,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+
+    <keycloak.version>20.0.2</keycloak.version>
+    <junit-jupiter.version>5.9.1</junit-jupiter.version>
   </properties>   
 
   <build>
@@ -102,23 +105,23 @@
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-server-spi-private</artifactId>
-      <version>20.0.2</version>
+      <version>${keycloak.version}</version>
     </dependency>
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-server-spi</artifactId>
-      <version>20.0.2</version>
+      <version>${keycloak.version}</version>
     </dependency>
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-core</artifactId>
-      <version>20.0.2</version>
+      <version>${keycloak.version}</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
 

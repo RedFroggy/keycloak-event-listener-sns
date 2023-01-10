@@ -8,6 +8,8 @@ import org.keycloak.models.KeycloakSessionFactory;
 
 public class SnsEventListenerProviderFactory implements EventListenerProviderFactory {
 
+    static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
+
     @Override
     public void close() {
         // TODO Auto-generated method stub
@@ -15,27 +17,26 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     }
 
     @Override
-    public EventListenerProvider create(KeycloakSession arg0) {
+    public EventListenerProvider create(KeycloakSession session) {
         // TODO Auto-generated method stub
-        return null;
+        return new SnsEventListenerProvider();
     }
 
     @Override
     public String getId() {
         // TODO Auto-generated method stub
-        return null;
+        return SNS_EVENT_LISTENER;
     }
 
     @Override
-    public void init(Scope arg0) {
+    public void init(Scope scope) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void postInit(KeycloakSessionFactory arg0) {
+    public void postInit(KeycloakSessionFactory sessionFactory) {
         // TODO Auto-generated method stub
         
     }
-
 }

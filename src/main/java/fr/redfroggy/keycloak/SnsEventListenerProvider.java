@@ -18,13 +18,13 @@ public class SnsEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void onEvent(Event arg0) {
+    public void onEvent(Event event) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public void onEvent(AdminEvent arg0, boolean arg1) {
+    public void onEvent(AdminEvent event, boolean arg1) {
         // TODO Auto-generated method stub
         
     }
