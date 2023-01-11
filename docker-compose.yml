@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0
+    command: [ 'start-dev', '--debug' ]
+    volumes:
+            - ./target/keycloak-event-listener-sns-1.0-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-event-listener-sns.jar
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - DEBUG=true
+      - KC_HTTP_PORT=9080
+      - KC_HTTPS_PORT=9443
+    ports:
+      - 127.0.0.1:9080:9080
+      - 127.0.0.1:9443:9443
