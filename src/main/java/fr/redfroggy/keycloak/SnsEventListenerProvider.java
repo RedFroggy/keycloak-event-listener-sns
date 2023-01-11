@@ -31,7 +31,5 @@ public class SnsEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void close() {
-        // TODO Auto-generated method stub
-        
     }
 }

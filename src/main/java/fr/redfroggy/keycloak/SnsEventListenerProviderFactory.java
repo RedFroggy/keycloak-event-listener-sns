@@ -11,20 +11,16 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
 
     @Override
-    public void close() {
-        // TODO Auto-generated method stub
-        
+    public void close() {        
     }
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        // TODO Auto-generated method stub
         return new SnsEventListenerProvider();
     }
 
     @Override
     public String getId() {
-        // TODO Auto-generated method stub
         return SNS_EVENT_LISTENER;
     }
 
@@ -35,8 +31,6 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     }
 
     @Override
-    public void postInit(KeycloakSessionFactory sessionFactory) {
-        // TODO Auto-generated method stub
-        
+    public void postInit(KeycloakSessionFactory sessionFactory) {        
     }
 }
