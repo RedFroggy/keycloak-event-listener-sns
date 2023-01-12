@@ -10,10 +10,8 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     public static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
     private SnsEventListenerConfiguration snsEventListenerConfiguration;
-    private String CONFIG_EVENT_TOPIC_ARN = snsEventListenerConfiguration.getEventTopicArn();
-    private String CONFIG_ADMIN_EVENT_TOPIC_ARN = snsEventListenerConfiguration.getAdminEventTopicArn();
-    private String configEventTopicArn;
-    private String congifAdminEventTopicArn;
+    private String CONFIG_EVENT_TOPIC_ARN = "event-topic-arn";
+    private String CONFIG_ADMIN_EVENT_TOPIC_ARN = "admin-event-topic-arn";
 
     @Override
     public void close() {        
@@ -21,7 +19,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SnsEventListenerProvider();
+        return new SnsEventListenerProvider(snsEventListenerConfiguration);
     }
 
     @Override
@@ -31,8 +29,9 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public void init(Config.Scope config) {
-        configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
-        congifAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
+        String configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
+        String congifAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
+        snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, congifAdminEventTopicArn);
     }
 
     @Override

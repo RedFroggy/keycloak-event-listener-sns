@@ -6,8 +6,11 @@ import org.keycloak.events.admin.AdminEvent;
 
 
 public class SnsEventListenerProvider implements EventListenerProvider {
-
-    public SnsEventListenerProvider() {
+    
+    private SnsEventListenerConfiguration snsEventListenerConfiguration;
+    
+    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration) {
+        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
     }
 
     
