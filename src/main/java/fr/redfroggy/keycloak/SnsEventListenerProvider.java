@@ -24,7 +24,7 @@ public class SnsEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void onEvent(AdminEvent event, boolean arg1) {
+    public void onEvent(AdminEvent event, boolean includeRepresentation) {
         // TODO Auto-generated method stub
         
     }
