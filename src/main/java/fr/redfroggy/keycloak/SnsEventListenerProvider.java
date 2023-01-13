@@ -3,16 +3,16 @@ package fr.redfroggy.keycloak;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
+import org.keycloak.models.KeycloakSession;
 
 
 public class SnsEventListenerProvider implements EventListenerProvider {
     
     private SnsEventListenerConfiguration snsEventListenerConfiguration;
-    
-    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration) {
+
+    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration, KeycloakSession session) {
         this.snsEventListenerConfiguration = snsEventListenerConfiguration;
     }
-
     
     @Override
     public String toString() {

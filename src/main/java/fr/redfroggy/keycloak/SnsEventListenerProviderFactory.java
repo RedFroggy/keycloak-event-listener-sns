@@ -19,7 +19,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SnsEventListenerProvider(snsEventListenerConfiguration);
+        return new SnsEventListenerProvider(snsEventListenerConfiguration, session);
     }
 
     @Override
