@@ -1,6 +1,6 @@
 package fr.redfroggy.keycloak;
 
-import org.keycloak.Config.Scope;
+import org.keycloak.Config;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.models.KeycloakSession;
@@ -8,7 +8,10 @@ import org.keycloak.models.KeycloakSessionFactory;
 
 public class SnsEventListenerProviderFactory implements EventListenerProviderFactory {
 
-    static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
+    public static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
+    private SnsEventListenerConfiguration snsEventListenerConfiguration;
+    private String CONFIG_EVENT_TOPIC_ARN = "event-topic-arn";
+    private String CONFIG_ADMIN_EVENT_TOPIC_ARN = "admin-event-topic-arn";
 
     @Override
     public void close() {        
@@ -16,7 +19,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SnsEventListenerProvider();
+        return new SnsEventListenerProvider(snsEventListenerConfiguration);
     }
 
     @Override
@@ -25,12 +28,14 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     }
 
     @Override
-    public void init(Scope scope) {
-        // TODO Auto-generated method stub
-        
+    public void init(Config.Scope config) {
+        String configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
+        String congifAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
+        snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, congifAdminEventTopicArn);
     }
 
     @Override
     public void postInit(KeycloakSessionFactory sessionFactory) {        
     }
+
 }

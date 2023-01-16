@@ -12,6 +12,8 @@ services:
       - DEBUG=true
       - KC_HTTP_PORT=9080
       - KC_HTTPS_PORT=9443
+      - KC_SNS_EVENT_TOPIC_ARN=TODO
+      - KS_SNS_ADMIN_EVENT_TOPIC_ARN=TODO
     ports:
       - 127.0.0.1:9080:9080
       - 127.0.0.1:9443:9443

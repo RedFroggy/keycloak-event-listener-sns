@@ -6,8 +6,11 @@ import org.keycloak.events.admin.AdminEvent;
 
 
 public class SnsEventListenerProvider implements EventListenerProvider {
-
-    public SnsEventListenerProvider() {
+    
+    private SnsEventListenerConfiguration snsEventListenerConfiguration;
+    
+    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration) {
+        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
     }
 
     
@@ -24,7 +27,7 @@ public class SnsEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void onEvent(AdminEvent event, boolean arg1) {
+    public void onEvent(AdminEvent event, boolean includeRepresentation) {
         // TODO Auto-generated method stub
         
     }
