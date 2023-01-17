@@ -4,15 +4,14 @@ import org.keycloak.events.Event;
 
 public class SnsEvent {
    
-    private final Event snsEvent;
+    private final Event event;
 
-    public SnsEvent(Event snsEvent) {
-        this.snsEvent = snsEvent;
+    public SnsEvent(Event event) {
+        this.event = event;
     }
 
-    public Event getSnsEvent() {
-        return snsEvent;
+    public Event getEvent() {
+        return event;
     }
-
 
 }

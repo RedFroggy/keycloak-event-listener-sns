@@ -3,23 +3,13 @@ package fr.redfroggy.keycloak;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
-import org.keycloak.models.KeycloakSession;
-import com.amazonaws.services.sns.AmazonSNSAsync;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SnsEventListenerProvider implements EventListenerProvider {
-    
-    private final SnsEventListenerConfiguration snsEventListenerConfiguration;
+
     private final SnsEventPublisher snsEventPublisher;
-    
 
-
-    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration,
-            SnsEventPublisher snsEventPublisher, KeycloakSession session, AmazonSNSAsync snsClient,
-            ObjectMapper mapper) {
-        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
+    public SnsEventListenerProvider(SnsEventPublisher snsEventPublisher) {
         this.snsEventPublisher = snsEventPublisher;
-        
     }
 
     @Override
@@ -29,13 +19,13 @@ public class SnsEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(Event event) {
-        snsEventPublisher.sendEvent(snsEventListenerConfiguration.getEventTopicArn(), event);
+        snsEventPublisher.sendEvent(new SnsEvent(event));
     }
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-        snsEventPublisher.sendAdminEvent(snsEventListenerConfiguration.getAdminEventTopicArn(), event);
-        
+        snsEventPublisher.sendAdminEvent(new SnsAdminEvent(event));
+
     }
 
     @Override

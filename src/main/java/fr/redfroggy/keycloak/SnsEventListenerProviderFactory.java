@@ -15,11 +15,9 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     public static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
     private SnsEventListenerConfiguration snsEventListenerConfiguration;
-    private SnsEventPublisher snsEventPublisher;
     private String CONFIG_EVENT_TOPIC_ARN = "event-topic-arn";
     private String CONFIG_ADMIN_EVENT_TOPIC_ARN = "admin-event-topic-arn";
-    private final ObjectMapper mapper = new ObjectMapper();
-    private AmazonSNSAsync snsClient;
+    private ObjectMapper mapper;
 
     @Override
     public void close() {        
@@ -27,8 +25,8 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        snsClient = AmazonSNSAsyncClientBuilder.standard().build();
-        return new SnsEventListenerProvider(snsEventListenerConfiguration, snsEventPublisher, session, snsClient, mapper);
+        AmazonSNSAsync snsClient = AmazonSNSAsyncClientBuilder.standard().build();
+        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper));
     }
 
     @Override
