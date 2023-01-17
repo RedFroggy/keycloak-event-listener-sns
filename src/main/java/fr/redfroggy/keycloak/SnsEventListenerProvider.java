@@ -4,31 +4,37 @@ import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakSession;
-
+import com.amazonaws.services.sns.AmazonSNSAsync;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SnsEventListenerProvider implements EventListenerProvider {
     
-    private SnsEventListenerConfiguration snsEventListenerConfiguration;
-
-    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration, KeycloakSession session) {
-        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
-    }
+    private final SnsEventListenerConfiguration snsEventListenerConfiguration;
+    private final SnsEventPublisher snsEventPublisher;
     
+
+
+    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration,
+            SnsEventPublisher snsEventPublisher, KeycloakSession session, AmazonSNSAsync snsClient,
+            ObjectMapper mapper) {
+        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
+        this.snsEventPublisher = snsEventPublisher;
+        
+    }
+
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return super.toString();
     }
 
     @Override
     public void onEvent(Event event) {
-        // TODO Auto-generated method stub
-        
+        snsEventPublisher.sendEvent(snsEventListenerConfiguration.getEventTopicArn(), event);
     }
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-        // TODO Auto-generated method stub
+        snsEventPublisher.sendAdminEvent(snsEventListenerConfiguration.getAdminEventTopicArn(), event);
         
     }
 

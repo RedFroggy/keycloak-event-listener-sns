@@ -2,7 +2,7 @@ package fr.redfroggy.keycloak;
 
 import org.keycloak.events.admin.AdminEvent;
 
-public class SnsAdminEvent extends AdminEvent {
+public class SnsAdminEvent {
     private final AdminEvent adminEvent;
 
     public SnsAdminEvent(AdminEvent adminEvent) {
