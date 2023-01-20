@@ -1,7 +1,7 @@
 package fr.redfroggy.keycloak;
 
 public class SnsEventListenerConfiguration {
-    public static Object snsEventListenerConfiguration;
+    
     private final String eventTopicArn;
     private final String adminEventTopicArn;
 

@@ -24,8 +24,9 @@ public class SnsEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-        snsEventPublisher.sendAdminEvent(new SnsAdminEvent(event));
-
+        if (includeRepresentation){
+            snsEventPublisher.sendAdminEvent(new SnsAdminEvent(event));
+        }        
     }
 
     @Override

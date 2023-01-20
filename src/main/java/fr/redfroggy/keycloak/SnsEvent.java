@@ -2,7 +2,7 @@ package fr.redfroggy.keycloak;
 
 import org.keycloak.events.Event;
 
-public class SnsEvent {
+class SnsEvent {
    
     private final Event event;
 

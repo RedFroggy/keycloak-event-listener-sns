@@ -6,7 +6,7 @@ import com.amazonaws.services.sns.AmazonSNSAsync;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class SnsEventPublisher {
+class SnsEventPublisher {
 
     private final AmazonSNSAsync snsClient;
     private final ObjectMapper mapper;
@@ -24,17 +24,7 @@ public class SnsEventPublisher {
             log.warn("No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_EVENT_TOPIC_ARN");
             return;
         }
-
-        String payload = null;
-        try {
-            payload = mapper.writeValueAsString(snsEvent);
-        } catch (JsonProcessingException e) {
-            log.error("The payload wasn't created.");
-            return;
-        }
-
-        String message = payload;
-        snsClient.publish(snsEventListenerConfiguration.getEventTopicArn(), message);
+        publishEvent(snsEvent,snsEventListenerConfiguration.getEventTopicArn());
     }
 
     public void sendAdminEvent(SnsAdminEvent snsAdminEvent) {
@@ -42,17 +32,17 @@ public class SnsEventPublisher {
             log.warn("No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_ADMIN_EVENT_TOPIC_ARN");
             return;
         }
+        publishEvent(snsAdminEvent, snsEventListenerConfiguration.getAdminEventTopicArn());
+    }   
 
-        String payload = null;
+    private void publishEvent(Object event, String topicArn){        
         try {
-            payload = mapper.writeValueAsString(snsAdminEvent);
+            snsClient.publish(topicArn, mapper.writeValueAsString(event));
         } catch (JsonProcessingException e) {
-            log.error("The payload wasn't created.");
+            log.error("The payload wasn't created.", e);
             return;
         }
-
-        String message = payload;
-        snsClient.publish(snsEventListenerConfiguration.getAdminEventTopicArn(), message);
-    }   
+        
+    }
 
 }
