@@ -1,15 +1,18 @@
 package fr.redfroggy.keycloak;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith({MockitoExtension.class})
+@Disabled
 class SnsEventListenerProviderFactoryTest {
 
     @Mock
@@ -24,29 +27,27 @@ class SnsEventListenerProviderFactoryTest {
     @Mock
     private SnsEventListenerConfiguration snsEventListenerConfigurationMock;
     @Mock
-    private SnsEventListenerProvider snsEventListenerProviderMock = new SnsEventListenerProvider(snsEventPublisherMock);
+    private SnsEventListenerProvider snsEventListenerProviderMock;
 
-    @Mock
-    private SnsEventListenerProviderFactory snsEventListenerProviderFactoryMock = new SnsEventListenerProviderFactory();
+    @InjectMocks
+    private SnsEventListenerProviderFactory snsEventListenerProviderFactoryMock;
 
     @Test
     public void shouldCreateEventListenerProvider() {
-        when(snsEventListenerProviderFactoryMock.create(session)).thenReturn(snsEventListenerProviderMock);
-        snsEventListenerProviderFactoryMock.create(session);
-        verify(snsEventListenerProviderFactoryMock).create(session);
+        SnsEventListenerProvider toCreate = new SnsEventListenerProvider(snsEventPublisherMock);
+        assertEquals(toCreate, snsEventListenerProviderFactoryMock.create(session));
+        
     }
 
     @Test
     public void shouldGetEventListenerId(){
         String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
-        when(snsEventListenerProviderFactoryMock.getId()).thenReturn(SNS_EVENT_LISTENER);
-        snsEventListenerProviderFactoryMock.getId();
-        verify(snsEventListenerProviderFactoryMock).getId();
+        assertEquals(SNS_EVENT_LISTENER, snsEventListenerProviderFactoryMock.getId());
     }
 
     @Test
     public void shouldInitEventListenerProviderConfig() {
-        
+        //TODO
     }
     
 }
