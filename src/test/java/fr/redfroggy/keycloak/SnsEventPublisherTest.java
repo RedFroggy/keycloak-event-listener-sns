@@ -16,13 +16,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class SnsEventPublisherTest {
 
     @Mock
-    private AmazonSNSAsync snsClient;
+    private AmazonSNSAsync snsClientMock;
 
     @Mock
-    private SnsEvent snsEvent;
+    private SnsEvent snsEventMock;
 
     @Mock
-    private SnsAdminEvent snsAdminEvent;
+    private SnsAdminEvent snsAdminEventMock;
 
     @Mock
     private ObjectMapper mapperMock;
@@ -31,35 +31,43 @@ class SnsEventPublisherTest {
     private SnsEventListenerConfiguration snsEventListenerConfigurationMock;
     
     @InjectMocks
-    private SnsEventPublisher snsEventPublisherMock;
+    private SnsEventPublisher snsEventPublisher;
 
     
     @Test
-    void shouldsendEventWhenEventTopicArnExists() throws JsonProcessingException{
+    void shouldSendEventWhenEventTopicArnExists() throws JsonProcessingException{
         when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
-        when(mapperMock.writeValueAsString(snsEvent)).thenReturn("eventJSONString");
-        snsEventPublisherMock.sendEvent(snsEvent);
-        verify(snsClient).publish("eventTopicArn", "eventJSONString");
+        when(mapperMock.writeValueAsString(snsEventMock)).thenReturn("eventJSONString");
+        snsEventPublisher.sendEvent(snsEventMock);
+        verify(snsClientMock).publish("eventTopicArn", "eventJSONString");
     }
 
     @Test
-    void shouldNotsendEventWhenEventTopicArnDoenstExistsAndGetAWarning(){
-        snsEventPublisherMock.sendEvent(snsEvent);
-        verify(snsClient, never()).publish(any(),any());
+    void shouldNotSendEventWhenEventTopicArnDoenstExistsAndGetAWarning(){
+        snsEventPublisher.sendEvent(snsEventMock);
+        verify(snsClientMock, never()).publish(any(),any());
     }
 
     @Test
-    void shouldsendAdminEventWhenEventTopicArnExists() throws JsonProcessingException{
+    void shouldSendAdminEventWhenEventTopicArnExists() throws JsonProcessingException{
         when(snsEventListenerConfigurationMock.getAdminEventTopicArn()).thenReturn("adminEventTopicArn");
-        when(mapperMock.writeValueAsString(snsAdminEvent)).thenReturn("adminEventJSONString");
-        snsEventPublisherMock.sendAdminEvent(snsAdminEvent);
-        verify(snsClient).publish("adminEventTopicArn", "adminEventJSONString");
+        when(mapperMock.writeValueAsString(snsAdminEventMock)).thenReturn("adminEventJSONString");
+        snsEventPublisher.sendAdminEvent(snsAdminEventMock);
+        verify(snsClientMock).publish("adminEventTopicArn", "adminEventJSONString");
     }
 
     @Test
-    void shouldNotsendAdminEventWhenEventTopicArnDoenstExists(){
-        snsEventPublisherMock.sendAdminEvent(snsAdminEvent);
-        verify(snsClient, never()).publish(any(),any());
+    void shouldNotSendAdminEventWhenEventTopicArnDoenstExists(){
+        snsEventPublisher.sendAdminEvent(snsAdminEventMock);
+        verify(snsClientMock, never()).publish(any(),any());
+    }
+
+    @Test
+    void shouldNotSendEventAndLogAnErrorWhenAnyValueIsWrite() throws JsonProcessingException {
+        when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
+        when(mapperMock.writeValueAsString(snsEventMock)).thenThrow(JsonProcessingException.class);
+        snsEventPublisher.sendEvent(snsEventMock);
+        verify(snsClientMock, never()).publish(any(),any());
     }
 
 }

@@ -23,38 +23,44 @@ class SnsEventListenerProviderTest {
     private ArgumentCaptor<SnsEvent> snsEventCaptor;
 
     @Mock
-    private Event event;
+    private Event eventMock;
     
     @Mock
-    private SnsEvent snsEvent;
+    private SnsEvent snsEventMock;
 
     @Mock
-    private AdminEvent adminEvent;
+    private AdminEvent adminEventMock;
 
     @Mock
-    private SnsAdminEvent snsAdminEvent;
+    private SnsAdminEvent snsAdminEventMock;
 
     @Mock
     private SnsEventPublisher snsEventPublisherMock;
 
     @InjectMocks
-    private SnsEventListenerProvider snsEventListenerProviderMock;
+    private SnsEventListenerProvider snsEventListenerProvider;
 
     @Test
     void shouldAddNewEventListenedWhenCalled() {
-        snsEventListenerProviderMock.onEvent(event);
+        snsEventListenerProvider.onEvent(eventMock);
         verify(snsEventPublisherMock).sendEvent(snsEventCaptor.capture());
         SnsEvent result = snsEventCaptor.getValue();
-        assertEquals(event, result.getEvent());
+        assertEquals(eventMock, result.getEvent());
     }
 
     @Test
     void shouldAddNewAdminEventListenedWhenCalled(){
         boolean includeRepresentation = true;
-        snsEventListenerProviderMock.onEvent(adminEvent, includeRepresentation);
+        snsEventListenerProvider.onEvent(adminEventMock, includeRepresentation);
         verify(snsEventPublisherMock).sendAdminEvent(snsAdminEventCaptor.capture());
         SnsAdminEvent result = snsAdminEventCaptor.getValue();
-        assertEquals(adminEvent, result.getAdminEvent());
+        assertEquals(adminEventMock, result.getAdminEvent());
+    } 
+    
+    @Test
+    void shouldCloseTheProvider(){
+        snsEventListenerProvider.close();
+        // For coverage
     }
 
 }

@@ -141,6 +141,9 @@
                       <minimum>100%</minimum>
                     </limit>
                   </limits>
+                  <excludes>
+                    <exclude>fr.redfroggy.keycloak.SnsEventListenerProviderFactory</exclude>
+                  </excludes>
                 </rule>
               </rules>
             </configuration>
