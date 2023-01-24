@@ -6,6 +6,11 @@ import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
+import com.amazonaws.services.sns.AmazonSNSAsync;
+import com.amazonaws.services.sns.AmazonSNSAsyncClientBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 public class SnsEventListenerProviderFactory implements EventListenerProviderFactory {
 
     public static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
@@ -19,7 +24,9 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
 
     @Override
     public EventListenerProvider create(KeycloakSession session) {
-        return new SnsEventListenerProvider(snsEventListenerConfiguration);
+        AmazonSNSAsync snsClient = AmazonSNSAsyncClientBuilder.standard().build();
+        ObjectMapper mapper = new ObjectMapper();
+        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper));
     }
 
     @Override

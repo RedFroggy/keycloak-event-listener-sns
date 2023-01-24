@@ -3,33 +3,22 @@ package fr.redfroggy.keycloak;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
-
-
 public class SnsEventListenerProvider implements EventListenerProvider {
-    
-    private SnsEventListenerConfiguration snsEventListenerConfiguration;
-    
-    public SnsEventListenerProvider(SnsEventListenerConfiguration snsEventListenerConfiguration) {
-        this.snsEventListenerConfiguration = snsEventListenerConfiguration;
-    }
 
-    
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+    private final SnsEventPublisher snsEventPublisher;
+
+    public SnsEventListenerProvider(SnsEventPublisher snsEventPublisher) {
+        this.snsEventPublisher = snsEventPublisher;
     }
 
     @Override
     public void onEvent(Event event) {
-        // TODO Auto-generated method stub
-        
+        snsEventPublisher.sendEvent(new SnsEvent(event));
     }
 
     @Override
     public void onEvent(AdminEvent event, boolean includeRepresentation) {
-        // TODO Auto-generated method stub
-        
+        snsEventPublisher.sendAdminEvent(new SnsAdminEvent(event));       
     }
 
     @Override
