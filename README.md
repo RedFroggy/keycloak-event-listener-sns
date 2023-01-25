@@ -4,35 +4,35 @@ A [Keycloak](https://www.keycloak.org/) SPI that publishes events to an aws sns 
 ## **Compatibility**
 The version 1.0 of this plugin is compatible with Keycloak `20.0.x` and higher.
 
-## **How to install ?**
-In a terminal, install docker-compose with the below command
+## How to install?
 
 ```bash
 sudo apt install docker-compose
 ```
 
-### **Server**
-Create a network by using the image `quay.io/keycloak/keycloak:20.0` with the below command 
+### Server
 
-```bash
-docker-compose up -d
+Copy the jar to the `providers` folder and execute the following command:
+
+```shell
+${kc.home.dir}/bin/kc.sh build
 ```
 
-See the different created containers and the associated ports, with the below command
-
-```bash
-docker ps
-```
-Here, the used ports are :
-- HTTP PORT = 9080
-- HTTPS PORT = 9443
-
-### **Maven**
+### Maven
 
 You can also clone the Github Repository and install the plugin locally.
 
-### **Container image (Docker)**
+### Container image (Docker)
 
 For Docker-based setups mount or copy the jar to `/opt/keycloak/providers`.
 
 You may want to check [docker-compose.yml](docker-compose.yml) as an example.
+
+with docker-compose:
+1. package the code with aws dependencies, use maven 'docker-compose' profile to package 
+1. create .env file and add your own aws informations, see environment key in docker-compose
+
+```bash
+mvn package -P docker-compose
+docker-compose up -d
+```
