@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SnsEventListenerProviderFactory implements EventListenerProviderFactory {
 
-    public static final String SNS_EVENT_LISTENER = "SNS_EVENT_LISTENER";
+    public static final String SNS_EVENT_LISTENER = "aws-sns";
     private SnsEventListenerConfiguration snsEventListenerConfiguration;
     private String CONFIG_EVENT_TOPIC_ARN = "event-topic-arn";
     private String CONFIG_ADMIN_EVENT_TOPIC_ARN = "admin-event-topic-arn";
@@ -26,7 +26,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     public EventListenerProvider create(KeycloakSession session) {
         AmazonSNSAsync snsClient = AmazonSNSAsyncClientBuilder.standard().build();
         ObjectMapper mapper = new ObjectMapper();
-        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper));
+        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper), session.getTransactionManager());
     }
 
     @Override
@@ -37,8 +37,8 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     @Override
     public void init(Config.Scope config) {
         String configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
-        String congifAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
-        snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, congifAdminEventTopicArn);
+        String configAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
+        snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, configAdminEventTopicArn);
     }
 
     @Override
