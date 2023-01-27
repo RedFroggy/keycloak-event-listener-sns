@@ -35,7 +35,7 @@ class SnsEventPublisherTest {
 
     
     @Test
-    void shouldSendEventWhenEventTopicArnExists() throws JsonProcessingException{
+    void shouldSendEventWhenEventTopicArnExists()  throws JsonProcessingException {
         when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
         when(mapperMock.writeValueAsString(snsEventMock)).thenReturn("eventJSONString");
         snsEventPublisher.sendEvent(snsEventMock);
@@ -43,7 +43,7 @@ class SnsEventPublisherTest {
     }
 
     @Test
-    void shouldNotSendEventWhenEventTopicArnDoenstExistsAndGetAWarning(){
+    void shouldNotSendEventWhenEventTopicArnDoenstExistsAndThrowAnException() throws Exception{
         snsEventPublisher.sendEvent(snsEventMock);
         verify(snsClientMock, never()).publish(any(),any());
     }
@@ -57,13 +57,13 @@ class SnsEventPublisherTest {
     }
 
     @Test
-    void shouldNotSendAdminEventWhenEventTopicArnDoenstExists(){
+    void shouldNotSendAdminEventWhenEventTopicArnDoenstExistsAndThrowAnException(){
         snsEventPublisher.sendAdminEvent(snsAdminEventMock);
         verify(snsClientMock, never()).publish(any(),any());
     }
 
     @Test
-    void shouldNotSendEventAndLogAnErrorWhenAnyValueIsWrite() throws JsonProcessingException {
+    void shouldNotSendEventAndLogAnErrorWhenAnyValueIsWrite() throws JsonProcessingException  {
         when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
         when(mapperMock.writeValueAsString(snsEventMock)).thenThrow(JsonProcessingException.class);
         snsEventPublisher.sendEvent(snsEventMock);

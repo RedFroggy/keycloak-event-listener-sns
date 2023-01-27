@@ -13,36 +13,43 @@ class SnsEventPublisher {
     private static final Logger log = Logger.getLogger(SnsEventPublisher.class);
     private final SnsEventListenerConfiguration snsEventListenerConfiguration;
 
-    public SnsEventPublisher(AmazonSNSAsync snsClient, SnsEventListenerConfiguration snsEventListenerConfiguration, ObjectMapper mapper) {
+    public SnsEventPublisher(AmazonSNSAsync snsClient, SnsEventListenerConfiguration snsEventListenerConfiguration,
+            ObjectMapper mapper) {
         this.snsClient = snsClient;
         this.snsEventListenerConfiguration = snsEventListenerConfiguration;
         this.mapper = mapper;
     }
 
     public void sendEvent(SnsEvent snsEvent) {
-        if (snsEventListenerConfiguration.getEventTopicArn() == null) {
-            log.warn("No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_EVENT_TOPIC_ARN");
-            return;
+        try {
+            if (snsEventListenerConfiguration.getEventTopicArn() == null) {
+                throw new Exception();
+            }
+            publishEvent(snsEvent, snsEventListenerConfiguration.getEventTopicArn());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        publishEvent(snsEvent,snsEventListenerConfiguration.getEventTopicArn());
     }
 
     public void sendAdminEvent(SnsAdminEvent snsAdminEvent) {
-        if (snsEventListenerConfiguration.getAdminEventTopicArn() == null) {
-            log.warn("No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_ADMIN_EVENT_TOPIC_ARN");
-            return;
-        }
-        publishEvent(snsAdminEvent, snsEventListenerConfiguration.getAdminEventTopicArn());
-    }   
+        try {
+            if (snsEventListenerConfiguration.getAdminEventTopicArn() == null) {
+                throw new Exception();
+            }
+            publishEvent(snsAdminEvent, snsEventListenerConfiguration.getAdminEventTopicArn());
 
-    private void publishEvent(Object event, String topicArn){        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void publishEvent(Object event, String topicArn) {
         try {
             snsClient.publish(topicArn, mapper.writeValueAsString(event));
         } catch (JsonProcessingException e) {
             log.error("The payload wasn't created.", e);
             return;
         }
-        
     }
-
 }
