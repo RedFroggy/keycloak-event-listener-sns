@@ -27,7 +27,7 @@ class SnsEventPublisher {
             return;
         }
         publishEvent(snsEvent, snsEventListenerConfiguration.getEventTopicArn());
-        }
+    }
 
     public void sendAdminEvent(SnsAdminEvent snsAdminEvent) {
         if (snsEventListenerConfiguration.getAdminEventTopicArn() == null) {
@@ -44,7 +44,7 @@ class SnsEventPublisher {
         } catch (JsonProcessingException e) {
             log.error("The payload wasn't created.", e);
         } catch (Exception e) {
-            log.error("Exception occured during the event publication",e);
+            log.error("Exception occured during the event publication", e);
         }
     }
 }
