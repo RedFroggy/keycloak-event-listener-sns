@@ -29,13 +29,12 @@ class SnsEventPublisherTest {
 
     @Mock
     private SnsEventListenerConfiguration snsEventListenerConfigurationMock;
-    
+
     @InjectMocks
     private SnsEventPublisher snsEventPublisher;
 
-    
     @Test
-    void shouldSendEventWhenEventTopicArnExists()  throws JsonProcessingException {
+    void shouldSendEventWhenEventTopicArnExists() throws JsonProcessingException {
         when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
         when(mapperMock.writeValueAsString(snsEventMock)).thenReturn("eventJSONString");
         snsEventPublisher.sendEvent(snsEventMock);
@@ -43,9 +42,9 @@ class SnsEventPublisherTest {
     }
 
     @Test
-    void shouldNotSendEventWhenEventTopicArnDoenstExistsAndThrowAnException() throws Exception{
+    void shouldNotSendEventWhenEventTopicArnDoenstExistsAndGetAWarning() {
         snsEventPublisher.sendEvent(snsEventMock);
-        verify(snsClientMock, never()).publish(any(),any());
+        verify(snsClientMock, never()).publish(any(), any());
     }
 
     @Test
@@ -57,17 +56,23 @@ class SnsEventPublisherTest {
     }
 
     @Test
-    void shouldNotSendAdminEventWhenEventTopicArnDoenstExistsAndThrowAnException(){
+    void shouldNotSendAdminEventWhenEventTopicArnDoenstExistsAndGetAWarning() {
         snsEventPublisher.sendAdminEvent(snsAdminEventMock);
-        verify(snsClientMock, never()).publish(any(),any());
+        verify(snsClientMock, never()).publish(any(), any());
     }
 
     @Test
-    void shouldNotSendEventAndLogAnErrorWhenAnyValueIsWrite() throws JsonProcessingException  {
+    void shouldNotSendEventAndLogAnErrorWhenAnyValueIsWrite() throws JsonProcessingException {
         when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
         when(mapperMock.writeValueAsString(snsEventMock)).thenThrow(JsonProcessingException.class);
         snsEventPublisher.sendEvent(snsEventMock);
-        verify(snsClientMock, never()).publish(any(),any());
+        verify(snsClientMock, never()).publish(any(),any());        
     }
 
+    @Test
+    void shouldNotPropagateRuntimeExceptionIfPublishFailed() {
+        when(snsEventListenerConfigurationMock.getEventTopicArn()).thenReturn("eventTopicArn");
+        when(snsClientMock.publish(any(),any())).thenThrow(new RuntimeException("test"));
+        snsEventPublisher.sendEvent(snsEventMock);
+    }
 }

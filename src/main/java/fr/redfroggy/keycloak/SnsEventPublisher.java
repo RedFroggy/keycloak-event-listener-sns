@@ -21,27 +21,21 @@ class SnsEventPublisher {
     }
 
     public void sendEvent(SnsEvent snsEvent) {
-        try {
-            if (snsEventListenerConfiguration.getEventTopicArn() == null) {
-                throw new Exception();
-            }
-            publishEvent(snsEvent, snsEventListenerConfiguration.getEventTopicArn());
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (snsEventListenerConfiguration.getEventTopicArn() == null) {
+            log.warn(
+                    "No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_EVENT_TOPIC_ARN");
+            return;
         }
-    }
+        publishEvent(snsEvent, snsEventListenerConfiguration.getEventTopicArn());
+        }
 
     public void sendAdminEvent(SnsAdminEvent snsAdminEvent) {
-        try {
-            if (snsEventListenerConfiguration.getAdminEventTopicArn() == null) {
-                throw new Exception();
-            }
-            publishEvent(snsAdminEvent, snsEventListenerConfiguration.getAdminEventTopicArn());
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (snsEventListenerConfiguration.getAdminEventTopicArn() == null) {
+            log.warn(
+                    "No topicArn specified. Can not send event to AWS SNS! Set environment variable KC_SNS_ADMIN_EVENT_TOPIC_ARN");
+            return;
         }
+        publishEvent(snsAdminEvent, snsEventListenerConfiguration.getAdminEventTopicArn());
     }
 
     private void publishEvent(Object event, String topicArn) {
@@ -49,7 +43,8 @@ class SnsEventPublisher {
             snsClient.publish(topicArn, mapper.writeValueAsString(event));
         } catch (JsonProcessingException e) {
             log.error("The payload wasn't created.", e);
-            return;
+        } catch (Exception e) {
+            log.error("Exception occured during the event publication",e);
         }
     }
 }
