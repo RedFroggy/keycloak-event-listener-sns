@@ -4,23 +4,12 @@
     ],
     "repositoryUrl": "https://github.com/RedFroggy/keycloak-event-listener-sns",
     "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        "@semantic-release/git",
         [
             "@semantic-release/github",
             {
                 "assets": [
                     {
-                        "path": "./target/keycloak-event-listener-sns-v*[0-9].*[0-9].*[0-9]-javadoc.jar",
-                        "label": "javadoc"
-                    },
-                    {
-                        "path": "./target/keycloak-event-listener-sns-v*[0-9].*[0-9].*[0-9]-sources.jar",
-                        "label": "sources"
-                    },
-                    {
-                        "path": "./target/keycloak-event-listener-sns-v*[0-9].*[0-9].*[0-9].jar",
+                        "path": "./target/keycloak-event-listener-sns-0.0.2.jar",
                         "label": "jar"
                     }
                 ]
