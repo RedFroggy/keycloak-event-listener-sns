@@ -1,0 +1,41 @@
+name : Keycloak Event listener sns RedFroggy Tag
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+on:
+  workflow_call:
+    secrets:
+      GH_TOKEN:
+        required: true
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout required to release
+        uses: actions/checkout@v3
+
+      - name: Checkout artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: jar
+          path: target
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: setup semantic-release
+        run: npm install -g semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/changelog @semantic-release/github
+
+      - name: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: npx semantic-release
+
+      
