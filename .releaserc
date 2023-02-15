@@ -7,7 +7,6 @@
             {
                 "assets": [
                     {
-                        "path": "./target/keycloak-event-listener-sns-0.0.2.jar",
                         "label": "jar"
                     }
                 ]
