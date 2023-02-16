@@ -44,11 +44,12 @@ jobs:
         with:
           token: ${{ github.token }}
           latest: true
-
-      - name: Add files to release
-        uses: irongut/EditRelease@v1.2.0
+      
+      - name: Upload Release assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          id: ${{ steps.latest_release.outputs.id }}
-          files: "README.md"
+          upload_url: ${{ steps.latest_release.outputs.upload_url }}
+          files: "README.md","docker-compose.yml"
       
