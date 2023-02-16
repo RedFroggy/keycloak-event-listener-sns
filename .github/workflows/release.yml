@@ -51,5 +51,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          files: "README.md"
+          asset_path: ./README.md
       
