@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./target/keycloak-event-listener-sns-*[0-9].*[0-9].*[0-9].jar
-          asset_name: keycloak-event-listener-sns-*[0-9].*[0-9].*[0-9].jar
+          asset_path: ./target/keycloak-event-listener-sns-${{ needs.build.outputs.version }}.jar
+          asset_name: keycloak-event-listener-sns-${{ needs.build.outputs.version }}.jar
           asset_content_type: jar
       
