@@ -30,7 +30,7 @@ jobs:
           node-version: 'lts/*'
 
       - name: setup semantic-release
-        run: npm install -g semantic-release @conveyal/maven-semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/changelog @semantic-release/github
+        run: npm install -g semantic-release @conveyal/maven-semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/git @semantic-release/changelog @semantic-release/github @semantic-release/exec
 
       - name: release
         env:
@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./README.md
-          asset_name: README.md
-          asset_content_type: md
+          asset_path: ./target/keycloak-event-listener-sns-${{ env.NEXT_RELEASE_VERSION }}-sources.jar
+          asset_name: keycloak-event-listener-sns-${{ env.NEXT_RELEASE_VERSION }}-sources.jar
+          asset_content_type: jar
       
