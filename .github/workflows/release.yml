@@ -38,10 +38,17 @@ jobs:
           GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
         run: semantic-release --prepare @conveyal/maven-semantic-release --publish @semantic-release/github,@conveyal/maven-semantic-release --verify-conditions @semantic-release/github,@conveyal/maven-semantic-release --verify-release @conveyal/maven-semantic-release --use-conveyal-workflow --disable-snapshot-skip-ci --skip-maven-deploy
 
+      - name: Get latest release
+        id: latest_release
+        uses: kaliber5/action-get-release@v1
+        with:
+          token: ${{ github.token }}
+          latest: true
+
       - name: Add files to release
         uses: irongut/EditRelease@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          id: v0.0.3
+          id: ${{ steps.latest_release.outputs.id }}
           files: "README.md"
       
