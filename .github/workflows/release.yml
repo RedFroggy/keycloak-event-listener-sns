@@ -50,6 +50,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.latest_release.outputs.upload_url }}
+          upload_url: ${{ steps.latest_release.outputs.url }}
           files: "README.md","docker-compose.yml"
       
