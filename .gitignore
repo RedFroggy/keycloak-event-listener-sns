@@ -68,3 +68,6 @@ realm-config/local/
 
 ## local docker-compose resources ##
 .env
+
+# Dependency directories
+node_modules/
