@@ -44,6 +44,12 @@ jobs:
         with:
           token: ${{ github.token }}
           latest: true
+
+      - name: Gets semantic release info
+        id: semantic_release_info
+        uses: jossef/action-semantic-release-info@v2.1.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       
       - name: Upload Release assets
         uses: actions/upload-release-asset@v1
@@ -51,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./README.md
-          asset_name: README.md
-          asset_content_type: md
+          asset_path: ./target/keycloak-event-listener-sns-${{ steps.semantic_release_info.outputs.version }}.jar
+          asset_name: keycloak-event-listener-sns-${{ steps.semantic_release_info.outputs.version }}.jar
+          asset_content_type: jar
       
