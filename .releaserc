@@ -1,16 +1,9 @@
 {
-    "branches": ["main"],
+    "branches": [
+        "main"
+    ],
     "repositoryUrl": "https://github.com/RedFroggy/keycloak-event-listener-sns",
     "plugins": [
-        [
-            "@semantic-release/github",
-            {
-                "assets": [
-                    {
-                        "label": "jar"
-                    }
-                ]
-            }
-        ]
+        "@semantic-release/github"
     ]
 }
