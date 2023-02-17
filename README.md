@@ -18,6 +18,8 @@ Copy the jar to the `providers` folder and execute the following command:
 ${kc.home.dir}/bin/kc.sh build
 ```
 
+Note: the jars files are available directly on releases
+
 ### Maven
 
 You can also clone the Github Repository and install the plugin locally.
