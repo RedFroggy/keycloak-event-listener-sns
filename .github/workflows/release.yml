@@ -44,6 +44,9 @@ jobs:
         with:
           token: ${{ github.token }}
           latest: true
+      
+      - name : Get release version
+        id: latest_version
         run: echo NEW_VERSION=`echo ${{steps.latest_release.outputs.tag_name}} | sed 's/^.//'` >> $GITHUB_OUTPUT
       
       - name: Upload Release sources
@@ -52,8 +55,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}-sources.jar
-          asset_name: keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}-sources.jar
+          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}-sources.jar
+          asset_name: keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}-sources.jar
           asset_content_type: jar
 
       - name: Upload Release javadoc
@@ -62,8 +65,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}-javadoc.jar
-          asset_name: keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}-javadoc.jar
+          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}-javadoc.jar
+          asset_name: keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}-javadoc.jar
           asset_content_type: jar
 
       - name: Upload Release
@@ -72,7 +75,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.latest_release.outputs.upload_url }}
-          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}.jar
-          asset_name: keycloak-event-listener-sns-${{ steps.latest_release.outputs.NEW_VERSION }}.jar
+          asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}.jar
+          asset_name: keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}.jar
           asset_content_type: jar
       
