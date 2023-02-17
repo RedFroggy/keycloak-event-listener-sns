@@ -78,4 +78,3 @@ jobs:
           asset_path: ./target/keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}.jar
           asset_name: keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}.jar
           asset_content_type: jar
-      
