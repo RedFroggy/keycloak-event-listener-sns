@@ -51,7 +51,7 @@ jobs:
 
       - name: Check files existence
         id: check_files
-        uses: andstor/file-existence-action@v1
+        uses: andstor/file-existence-action@v2
         with:
           files: ./target/keycloak-event-listener-sns-${{ steps.latest_version.outputs.NEW_VERSION }}-sources.jar
 
