@@ -6,9 +6,12 @@
 </br>
 
 <div align="center">
-<a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/build.yml/badge.svg"/></a>
-<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg"/></a>
+<a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/build.yml/badge.svg"/></a><a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/rele
+ase.yml/badge.svg"/></a>
+
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 </div>
+
 </br>
 
 A [Keycloak](https://www.keycloak.org/) SPI that publishes events to an aws sns topic.
@@ -23,7 +26,7 @@ A [Keycloak](https://www.keycloak.org/) SPI that publishes events to an aws sns 
 * Send event on a topic aws sns
 
 ## Compatibility
-The version 1.0.2 of this plugin is compatible with Keycloak `20.0.x` and higher.
+The version ![GitHub Release Date](https://img.shields.io/github/release/RedFroggy/keycloak-event-listener-sns?style=plastic) of this plugin is compatible with Keycloak `20.0.x` and higher.
 
 ## How to install?
 
@@ -87,7 +90,7 @@ realm-settings/events" on your realm. Add and save to enable "AWS-SNS", remove a
 
 Once enabled, all of the actions in your account (details  updat, login, logout,...) will be published on aws sns topic.
 
-<!-- add sns topic images with pushed event -->
+[See Keycloak class *Event* for details of published elements](https://www.keycloak.org/docs-api/13.0/javadocs/org/keycloak/events/Event.html)
 
 ## How to contribute
 
