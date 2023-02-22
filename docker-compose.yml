@@ -3,7 +3,7 @@ version: '3'
 services:
   keycloak:
     image: quay.io/keycloak/keycloak:20.0
-    command: [ 'start-dev', '--debug' ]
+    command: [ 'start-dev', '--debug', '--spi-events-listener-aws-sns-event-topic-arn=hliuhs', '--spi-events-listener-aws-sns-admin-event-topic-arn=hliyriuhs' ]
     volumes:
             - ./target/keycloak-event-listener-sns-1.0.2-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-event-listener-sns.jar
     environment:
