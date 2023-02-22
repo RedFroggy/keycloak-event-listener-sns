@@ -9,6 +9,8 @@ import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerTransaction;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.models.KeycloakTransactionManager;
+import org.keycloak.models.RealmProvider;
+import org.keycloak.models.UserProvider;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
@@ -44,6 +46,12 @@ class SnsEventListenerProviderTest {
 
     @Mock
     private SnsEventPublisher snsEventPublisherMock;
+
+    @Mock
+    private UserProvider userProviderMock;
+
+    @Mock
+    private RealmProvider realmProviderMock;
 
     @InjectMocks
     private SnsEventListenerProvider snsEventListenerProvider;

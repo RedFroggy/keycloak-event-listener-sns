@@ -1,10 +1,13 @@
 package fr.redfroggy.keycloak;
 
+import org.jboss.logging.Logger;
 import org.keycloak.Config;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.EventListenerProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
+import org.keycloak.models.RealmProvider;
+import org.keycloak.models.UserProvider;
 
 import com.amazonaws.services.sns.AmazonSNSAsync;
 import com.amazonaws.services.sns.AmazonSNSAsyncClientBuilder;
@@ -17,6 +20,9 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     private SnsEventListenerConfiguration snsEventListenerConfiguration;
     private String CONFIG_EVENT_TOPIC_ARN = "event-topic-arn";
     private String CONFIG_ADMIN_EVENT_TOPIC_ARN = "admin-event-topic-arn";
+    private static final Logger log = Logger.getLogger(SnsEventListenerProviderFactory.class);
+    private UserProvider userProvider;
+    private RealmProvider realmProvider;
 
     @Override
     public void close() {        
@@ -26,7 +32,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     public EventListenerProvider create(KeycloakSession session) {
         AmazonSNSAsync snsClient = AmazonSNSAsyncClientBuilder.standard().build();
         ObjectMapper mapper = new ObjectMapper();
-        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper), session.getTransactionManager());
+        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper), session.getTransactionManager(), userProvider, realmProvider);
     }
 
     @Override
@@ -38,6 +44,7 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     public void init(Config.Scope config) {
         String configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
         String configAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
+        log.info("valeur de la configuration : " + configAdminEventTopicArn);
         snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, configAdminEventTopicArn);
     }
 
