@@ -2,7 +2,7 @@ version: '3'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:20.0
+    image: quay.io/keycloak/keycloak:21.0
     command: [ 'start-dev', '--debug' ]
     volumes:
             - ./target/keycloak-event-listener-sns-1.0.2-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-event-listener-sns.jar
