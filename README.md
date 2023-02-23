@@ -1,13 +1,14 @@
-# **keycloak-event-listener-sns**
+# **keycloak-event-listener-sns** 
 
 <div align="center">
-  <img src="./assets/keycloak-logo.png" />
+<img src="./assets/logo.png" width="15%"/> 
+  <img src="./assets/keycloak-logo1.png" width="35%" />
+  <img src="./assets/AWS-Logo.svg" width="22%"/>
 </div>
 </br>
 
 <div align="center">
-<a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/build.yml/badge.svg"/></a><a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/rele
-ase.yml/badge.svg"/></a>
+<a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/build.yml/badge.svg"/></a><a href="https://github.com/RedFroggy/keycloak-event-listener-sns"><img src="https://github.com/RedFroggy/keycloak-event-listener-sns/actions/workflows/release.yml/badge.svg"/></a>
 
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 </div>
@@ -55,12 +56,13 @@ You may want to check [docker-compose.yml](docker-compose.yml) as an example.
 
 with docker-compose:
 1. package the code with aws dependencies, use maven 'docker-compose' profile to package 
-1. create .env file and add your own aws informations, see environment key in docker-compose
 
 ```bash
 mvn package -P docker-compose
 docker-compose up -d
 ```
+
+1. create .env file and add your own aws informations, put in `environment` of docker-compose file the corresponding key and secret key names.
 
 ## How to use it
 
@@ -75,7 +77,7 @@ Verify event listeners is deploy in keycloak. Got to {keycloak url}/admin/master
 
 ### Configuration
 
-Once the installation is complete, the `AWS-SNS` event listener appears in "
+Once the installation is complete, the `aws-sns` event listener appears in "
 realm-settings/events" on your realm. Add and save to enable "AWS-SNS", remove and save to disable "AWS-SNS"
 
 <div align="center">
@@ -92,6 +94,21 @@ Once enabled, all of the actions in your account (details  updat, login, logout,
 
 [See Keycloak class *Event* for details of published elements](https://www.keycloak.org/docs-api/13.0/javadocs/org/keycloak/events/Event.html)
 
+#### **Sns topic arn configuration**
+
+You have two possibilities to configure the event topic arn and admin event topic arn :
+1. use the `.env` file add your own aws informations about sns topic arn, put in `environment` of docker-compose file the corresponding event topic arn and admin event topic arn names.
+
+```
+ - KC_SNS_EVENT_TOPIC_ARN=${KC_SNS_EVENT_TOPIC_ARN-TODO}
+ - KC_SNS_ADMIN_EVENT_TOPIC_ARN=${KC_SNS_ADMIN_EVENT_TOPIC_ARN-TODO}
+```
+2. use the following lines in `command` in docker-compose file
+
+```
+'--spi-events-listener-aws-sns-event-topic-arn=TODO', 
+'--spi-events-listener-aws-sns-admin-event-topic-arn=TODO'
+```
 ## How to contribute
 
 [See here](CONTRIBUTING.en.md)

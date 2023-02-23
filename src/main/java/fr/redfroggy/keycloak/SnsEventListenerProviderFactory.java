@@ -40,8 +40,8 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     public void init(Config.Scope config) {
         String configEventTopicArn = config.get(CONFIG_EVENT_TOPIC_ARN, System.getenv("KC_SNS_EVENT_TOPIC_ARN"));
         String configAdminEventTopicArn = config.get(CONFIG_ADMIN_EVENT_TOPIC_ARN, System.getenv("KC_SNS_ADMIN_EVENT_TOPIC_ARN")); 
-        log.info("valeur de la configuration : " + configEventTopicArn);
-        log.info("valeur de la configuration admin : " + configAdminEventTopicArn);
+        log.info("conficuration value : " + configEventTopicArn);
+        log.info("admin conficuration value : " + configAdminEventTopicArn);
         snsEventListenerConfiguration = new SnsEventListenerConfiguration(configEventTopicArn, configAdminEventTopicArn);
     }
 
