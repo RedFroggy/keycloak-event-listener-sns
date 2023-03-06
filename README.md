@@ -27,7 +27,7 @@ A [Keycloak](https://www.keycloak.org/) SPI that publishes events to an aws sns 
 * Send event on a topic aws sns
 
 ## Compatibility
-The version ![GitHub Release Date](https://img.shields.io/github/release/RedFroggy/keycloak-event-listener-sns?style=plastic) of this plugin is compatible with Keycloak `20.0.x` and higher.
+The version ![GitHub Release Date](https://img.shields.io/github/release/RedFroggy/keycloak-event-listener-sns?style=plastic) of this plugin is compatible with Keycloak `21.0.x` and higher.
 
 ## How to install?
 
