@@ -99,7 +99,7 @@ class SnsEventListenerProviderTest {
         verify(snsEventPublisherMock).sendEvent(snsEventCaptor.capture());
         SnsEvent result = snsEventCaptor.getValue();
         assertThat(result.getEvent()).isEqualTo(eventMock);
-        assertThat(result.getUsername()).isEqualTo(null);
+        assertThat(result.getUsername()).isNull();
     }
 
     @Test
@@ -123,6 +123,11 @@ class SnsEventListenerProviderTest {
     void shouldAddAdminEventToTransaction(){
         snsEventListenerProvider.onEvent(adminEventMock, true);
         when(adminEventMock.getAuthDetails()).thenReturn(authDetailsMock);
+        when(authDetailsMock.getUserId()).thenReturn("userId");
+        when(adminEventMock.getRealmId()).thenReturn("realmId");
+        when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
+        when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(userMock);
+        when(userMock.getUsername()).thenReturn("username");
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
         transaction.begin();
@@ -130,7 +135,22 @@ class SnsEventListenerProviderTest {
         verify(snsEventPublisherMock).sendAdminEvent(snsAdminEventCaptor.capture());
         SnsAdminEvent result = snsAdminEventCaptor.getValue();
         assertThat(result.getAdminEvent()).isEqualTo(adminEventMock);
-        assertThat(result.getUsername()).isEqualTo(userMock.getUsername());
+        assertThat(result.getUsername()).isNotNull().isEqualTo(userMock.getUsername());
+    }
+
+    @Test
+    void shouldAddAdminEventToTransactionWithUsernameToNullBecauseUserIdNull(){
+        snsEventListenerProvider.onEvent(adminEventMock, true);
+        when(adminEventMock.getAuthDetails()).thenReturn(authDetailsMock);
+        when(authDetailsMock.getUserId()).thenReturn(null);
+        verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
+        EventListenerTransaction transaction = transactionCaptor.getValue();
+        transaction.begin();
+        transaction.commit();
+        verify(snsEventPublisherMock).sendAdminEvent(snsAdminEventCaptor.capture());
+        SnsAdminEvent result = snsAdminEventCaptor.getValue();
+        assertThat(result.getAdminEvent()).isEqualTo(adminEventMock);
+        assertThat(result.getUsername()).isNull();
     }
     
     @Test
