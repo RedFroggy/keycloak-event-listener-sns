@@ -74,7 +74,8 @@ class SnsEventListenerProviderTest {
         snsEventListenerProvider.onEvent(eventMock);
         when(eventMock.getUserId()).thenReturn("userId");
         when(eventMock.getRealmId()).thenReturn("realmId");
-        when(userProviderMock.getUserById(realmProviderMock.getRealm("realmId"), "userId")).thenReturn(userMock);
+        when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
+        when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(userMock);
         when(userMock.getUsername()).thenReturn("username");
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
@@ -106,7 +107,8 @@ class SnsEventListenerProviderTest {
         snsEventListenerProvider.onEvent(eventMock);
         when(eventMock.getUserId()).thenReturn("userId");
         when(eventMock.getRealmId()).thenReturn("realmId");
-        when(userProviderMock.getUserById(realmProviderMock.getRealm("realmId"), "userId")).thenReturn(null);
+        when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
+        when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(null);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
         transaction.begin();
@@ -114,7 +116,7 @@ class SnsEventListenerProviderTest {
         verify(snsEventPublisherMock).sendEvent(snsEventCaptor.capture());
         SnsEvent result = snsEventCaptor.getValue();
         assertThat(result.getEvent()).isEqualTo(eventMock);
-        assertThat(result.getUsername()).isEqualTo(null);
+        assertThat(result.getUsername()).isNull();
     }
 
     @Test
