@@ -139,10 +139,9 @@ class SnsEventListenerProviderTest {
     }
 
     @Test
-    void shouldAddAdminEventToTransactionWithUsernameToNullBecauseUserIdNull(){
+    void shouldAddAdminEventToTransactionWithUsernameToNullBecauseAuthDetailsNull(){
         snsEventListenerProvider.onEvent(adminEventMock, true);
-        when(adminEventMock.getAuthDetails()).thenReturn(authDetailsMock);
-        when(authDetailsMock.getUserId()).thenReturn(null);
+        when(adminEventMock.getAuthDetails()).thenReturn(null);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
         transaction.begin();

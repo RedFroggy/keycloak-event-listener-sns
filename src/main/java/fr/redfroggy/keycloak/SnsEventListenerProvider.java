@@ -48,7 +48,13 @@ public class SnsEventListenerProvider implements EventListenerProvider {
     }
 
     private void sendAdminEvent(AdminEvent adminEvent, boolean includeRepresentation) {
-        snsEventPublisher.sendAdminEvent(new SnsAdminEvent(adminEvent, getUsername(adminEvent.getRealmId(), adminEvent.getAuthDetails().getUserId())));
+        String adminUserId;
+        if (adminEvent.getAuthDetails() == null) {
+            adminUserId = null;
+        }else{
+            adminUserId = adminEvent.getAuthDetails().getUserId();
+        }
+        snsEventPublisher.sendAdminEvent(new SnsAdminEvent(adminEvent, getUsername(adminEvent.getRealmId(), adminUserId)));       
     }
 
     private String getUsername(String realmId, String userId) {
