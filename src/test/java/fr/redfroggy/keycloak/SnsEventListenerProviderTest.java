@@ -144,7 +144,7 @@ class SnsEventListenerProviderTest {
         snsEventListenerProvider.onEvent(adminEventMock, true);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
-        transaction.begin();        
+        transaction.begin();
         transaction.commit();
         verify(snsEventPublisherMock).sendAdminEvent(snsAdminEventCaptor.capture());
         SnsAdminEvent result = snsAdminEventCaptor.getValue();
