@@ -65,7 +65,7 @@
     <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
     <maven-shade.version>3.4.1</maven-shade.version>
 
-    <keycloak.version>21.0.1</keycloak.version>
+    <keycloak.version>21.1.2</keycloak.version>
     <aws-java-sdk-sns.version>1.12.578</aws-java-sdk-sns.version>
     <junit-jupiter.version>5.9.2</junit-jupiter.version>
     <assertj.version>3.24.2</assertj.version>
