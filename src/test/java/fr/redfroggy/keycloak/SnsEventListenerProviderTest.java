@@ -9,11 +9,7 @@ import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerTransaction;
 import org.keycloak.events.admin.AdminEvent;
 import org.keycloak.events.admin.AuthDetails;
-import org.keycloak.models.KeycloakTransactionManager;
-import org.keycloak.models.RealmModel;
-import org.keycloak.models.RealmProvider;
-import org.keycloak.models.UserModel;
-import org.keycloak.models.UserProvider;
+import org.keycloak.models.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
@@ -48,6 +44,12 @@ class SnsEventListenerProviderTest {
     private KeycloakTransactionManager transactionManagerMock;
 
     @Mock
+    private KeycloakSessionFactory sessionFactory;
+
+    @Mock
+    private KeycloakSession session;
+
+    @Mock
     private SnsEventPublisher snsEventPublisherMock;
 
     @Mock
@@ -76,6 +78,11 @@ class SnsEventListenerProviderTest {
         when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
         when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(userMock);
         when(userMock.getUsername()).thenReturn("username");
+        when(sessionFactory.create()).thenReturn(session);
+        when(session.getTransactionManager()).thenReturn(transactionManagerMock);
+        when(session.realms()).thenReturn(realmProviderMock);
+        when(session.users()).thenReturn(userProviderMock);
+
         snsEventListenerProvider.onEvent(eventMock);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
@@ -91,6 +98,9 @@ class SnsEventListenerProviderTest {
     void shouldAddEventToTransactionWithUsernameToNullBecauseUserIdNull(){
         when(eventMock.getUserId()).thenReturn(null);
         when(eventMock.getRealmId()).thenReturn("realmId");
+        when(sessionFactory.create()).thenReturn(session);
+        when(session.getTransactionManager()).thenReturn(transactionManagerMock);
+
         snsEventListenerProvider.onEvent(eventMock);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
@@ -109,6 +119,11 @@ class SnsEventListenerProviderTest {
         when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
         when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(null);
         snsEventListenerProvider.onEvent(eventMock);
+        when(sessionFactory.create()).thenReturn(session);
+        when(session.getTransactionManager()).thenReturn(transactionManagerMock);
+        when(session.realms()).thenReturn(realmProviderMock);
+        when(session.users()).thenReturn(userProviderMock);
+
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
         transaction.begin();
@@ -127,6 +142,11 @@ class SnsEventListenerProviderTest {
         when(realmProviderMock.getRealm("realmId")).thenReturn(realmMock);
         when(userProviderMock.getUserById(realmMock, "userId")).thenReturn(userMock);
         when(userMock.getUsername()).thenReturn("username");
+        when(sessionFactory.create()).thenReturn(session);
+        when(session.getTransactionManager()).thenReturn(transactionManagerMock);
+        when(session.realms()).thenReturn(realmProviderMock);
+        when(session.users()).thenReturn(userProviderMock);
+
         snsEventListenerProvider.onEvent(adminEventMock, true);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();
@@ -141,6 +161,9 @@ class SnsEventListenerProviderTest {
     @Test
     void shouldAddAdminEventToTransactionWithUsernameToNullBecauseAuthDetailsNull(){
         when(adminEventMock.getAuthDetails()).thenReturn(null);
+        when(sessionFactory.create()).thenReturn(session);
+        when(session.getTransactionManager()).thenReturn(transactionManagerMock);
+
         snsEventListenerProvider.onEvent(adminEventMock, true);
         verify(transactionManagerMock).enlistAfterCompletion(transactionCaptor.capture());
         EventListenerTransaction transaction = transactionCaptor.getValue();

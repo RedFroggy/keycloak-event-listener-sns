@@ -28,7 +28,9 @@ public class SnsEventListenerProviderFactory implements EventListenerProviderFac
     public EventListenerProvider create(KeycloakSession session) {
         AmazonSNSAsync snsClient = AmazonSNSAsyncClientBuilder.standard().build();
         ObjectMapper mapper = new ObjectMapper();
-        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper), session.getTransactionManager(), session.users(), session.realms());
+        return new SnsEventListenerProvider(new SnsEventPublisher(snsClient, snsEventListenerConfiguration, mapper),
+                session.getKeycloakSessionFactory(),
+                session.getTransactionManager());
     }
 
     @Override
