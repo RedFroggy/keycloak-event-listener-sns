@@ -60,7 +60,7 @@
     <maven.install.plugin.version>3.1.1</maven.install.plugin.version>
     <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
     <maven.site.plugin.version>3.12.1</maven.site.plugin.version>
-    <maven.project.info.reports.plugin.version>3.4.4</maven.project.info.reports.plugin.version>
+    <maven.project.info.reports.plugin.version>3.4.5</maven.project.info.reports.plugin.version>
     <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
     <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
     <maven-shade.version>3.4.1</maven-shade.version>
