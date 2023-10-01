@@ -69,7 +69,7 @@
     <aws-java-sdk-sns.version>1.12.560</aws-java-sdk-sns.version>
     <junit-jupiter.version>5.9.2</junit-jupiter.version>
     <assertj.version>3.24.2</assertj.version>
-    <jboss-logging.version>3.5.0.Final</jboss-logging.version>
+    <jboss-logging.version>3.5.3.Final</jboss-logging.version>
     <mockito.version>5.1.1</mockito.version>
   </properties>
 
