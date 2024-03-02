@@ -6,7 +6,7 @@
 
   <groupId>fr.redfroggy.keycloak</groupId>
   <artifactId>keycloak-event-listener-sns</artifactId>
-  <version>1.1.7</version>
+  <version>1.1.8</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>SPI that publishes events to an aws sns topic</description>
